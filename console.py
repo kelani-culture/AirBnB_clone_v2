@@ -115,8 +115,6 @@ class HBNBCommand(cmd.Cmd):
     
     def create_attrib(self, cls, params):
         """Create attribute for each class being passed"""
-        id = None
-        instance = None
         if cls in HBNBCommand.classes:
             cls  = HBNBCommand.classes[cls]()
             for param in params:
