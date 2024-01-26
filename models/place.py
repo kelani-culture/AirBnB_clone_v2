@@ -8,9 +8,9 @@ from sqlalchemy.orm import relationship
 
 place_amenity = Table('place_amenity',
                         Base.metadata,
-                        Column(String(60), ForeignKey('places.id'),
+                        Column('place_id', String(60), ForeignKey('places.id'),
                                 primary_key=True, nullable=False),
-                        Column(String(60), ForeignKey('amenities.id'),
+                        Column('amenities_id', String(60), ForeignKey('amenities.id'),
                                 primary_key=True, nullable=False)
                         )
 
@@ -29,8 +29,8 @@ class Place(BaseModel, Base):
         latitude = Column(Float, nullable=True)
         longitude = Column(Float, nullable=True)
         place = relationship("Review", backref='place', cascade='all, delete-orphan')
-        amenities = relationship('Amenities', secondary=place_amenity,
-                                       backpopulates='place_amenities', viewonly=False)
+        amenities = relationship('Amenity', secondary=place_amenity,
+                                       back_populates='place_amenities', viewonly=False)
 
     else:
         city_id = ""
