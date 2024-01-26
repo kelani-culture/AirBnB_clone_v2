@@ -18,8 +18,18 @@ class State(BaseModel, Base):
     #Filestorage
     else:
         name = ""
-        @property
-        def cities(self):
-            #TODO: set a getter attribute that returns a list of cities instance
-            # state_id
-            return self
+
+    @property
+    def cities(self):
+        """
+        getter attribute that 
+        returns were city were state.id == state_id
+        """
+        from models import storage
+        from models.city import City
+        citiesList = storage.all(City)
+        cityStateList = []
+        for city in citiesList.Value():
+            if city.state_id == self.id:
+                cityStateList.append(city)
+        return cityStateList
