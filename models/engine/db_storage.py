@@ -28,7 +28,6 @@ class DBStorage:
         
     def all(self, cls=None):
         """ Query all objects from the current database session """
-        from models import storage
         classes = {"State": State, "Amenity": Amenity, "City": City,
                    "User": User, "Place": Place, "Review": Review
                    }
