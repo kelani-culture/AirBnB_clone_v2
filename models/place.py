@@ -2,9 +2,16 @@
 """ Place Module for HBNB project """
 from models.base_model import BaseModel, Base
 from os import getenv
-from sqlalchemy import Column, String, Integer, ForeignKey, Float
+from sqlalchemy import Column, String, Integer, ForeignKey, Float, Table
 from sqlalchemy.orm import relationship
 
+
+if getenv('HBNB_TYPE_STORAGE') == 'db':
+    place_amenity = Table('place_amenity',
+                            Base.metadata,
+                            Column(String(60), ForeignKey('places.id'), nullable=False),
+                            Column(String(60), ForeignKey('amenities.id', nullable=False))
+                        )
 
 class Place(BaseModel, Base):
     """ A place to stay """
@@ -21,6 +28,8 @@ class Place(BaseModel, Base):
         latitude = Column(Float, nullable=True)
         longitude = Column(Float, nullable=True)
         place = relationship("Review", backref='place', cascade='all, delete-orphan')
+        amenities = relationship('Amenities', secondary=place_amenity,
+                                       backpopulates='place_amenities', viewonly=False)
 
     else:
         city_id = ""
@@ -34,3 +43,23 @@ class Place(BaseModel, Base):
         latitude = 0.0
         longitude = 0.0
         amenity_ids = []
+    
+    @property
+    def amenities(self):
+        from models.__init__ import storage
+        from models.amenity import Amenity
+        amenities = storage.all(Amenity)
+        place_amenitiesList = []
+        for amenity in amenities:
+            if amenity.id == self.id:
+                place_amenitiesList.append(amenity)
+        Place.amenities = place_amenitiesList
+        return place_amenitiesList
+
+    @amenities.setter
+    def amenities(self, obj):
+        from models.__init__ import storage
+        from models.amenity import Amenity
+        
+        if isinstance(obj, Amenity):
+            self.amenities_ids.append(obj.id)
