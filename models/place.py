@@ -6,11 +6,12 @@ from sqlalchemy import Column, String, Integer, ForeignKey, Float, Table
 from sqlalchemy.orm import relationship
 
 
-if getenv('HBNB_TYPE_STORAGE') == 'db':
-    place_amenity = Table('place_amenity',
-                            Base.metadata,
-                            Column(String(60), ForeignKey('places.id'), nullable=False),
-                            Column(String(60), ForeignKey('amenities.id', nullable=False))
+place_amenity = Table('place_amenity',
+                        Base.metadata,
+                        Column(String(60), ForeignKey('places.id'),
+                                primary_key=True, nullable=False),
+                        Column(String(60), ForeignKey('amenities.id'),
+                                primary_key=True, nullable=False)
                         )
 
 class Place(BaseModel, Base):
