@@ -19,7 +19,7 @@ def hello():
 @app.route('/c/<text>', strict_slashes=False)
 def c_is_fun(text):
     text = text.replace('_', ' ')
-    return text
+    return f"C {text}"
 
 
 if __name__ == "__main__":
