@@ -23,8 +23,8 @@ def c_is_fun(text):
 
 
 @app.route('/python/<text>', strict_slashes=False)
-@app.route('/python', strict_slashes=False)
-@app.route('/python/', strict_slashes=False)
+# @app.route('/python', strict_slashes=False)
+# @app.route('/python/', strict_slashes=False)
 def python_is_cool(text=None):
     if text:
         text = text.replace('_', ' ')
