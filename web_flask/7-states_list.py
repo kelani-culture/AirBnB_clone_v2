@@ -2,6 +2,22 @@
 """a list of all states"""
 from flask import Flask, render_template
 from models.__init__ import storage
+from markupsafe import escape
+import os
+import subprocess
+
+current_directory = os.getenv("PWD")
+storage = None
+executable_path = f"{current_directory}/dump_fix.sh"
+storage_type = os.getenv("HBNB_TYPE_STORAGE")
+app = Flask(__name__)
+subprocess.run(['bash', 'dump_fix.sh', '7-dump.sql'])
+if current_directory:
+    import sys
+    current_directory = current_directory.split('/')
+    current_directory = current_directory[:-1]
+    current_directory = '/'.join(current_directory)
+    sys.path.append(current_directory)
 
 
 app = Flask(__name__)
