@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""a list of all states"""
+"""a list of all states in the database"""
 from flask import Flask, render_template
 from models.__init__ import storage
 from markupsafe import escape
