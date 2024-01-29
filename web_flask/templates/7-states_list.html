@@ -7,7 +7,10 @@
    <H1>States:</H1>
    <UL>
         {% for state in state_list %}
-            <LI>{{ state.id }}: <B>{{ state.name }}</B></LI>
+            {% if state %}
+                <LI>{{ state[1].id }}: <B>{{ state[1].name }}</B></LI>
+            {% endif %}
+        {% endfor %}
    </UL>
 </BODY>
 </HTML>
